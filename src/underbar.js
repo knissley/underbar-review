@@ -263,7 +263,29 @@
   //     return total + number * number;
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
+
+  /*
+  I - a collection, an iterator, and an accumulator
+  O - an accumulated value created by running the iterator on each item in the collection
+  C
+  E
+  */
   _.reduce = function(collection, iterator, accumulator) {
+    //loop over the input collection
+    _.each(collection, function(currentValue, index) {
+      // check if the accumulator is undefined and if we're at the 0th index (to make sure we skip the initial value when no accumulator is passed in)
+      if (accumulator === undefined && index === 0) {
+        accumulator = currentValue;
+      } else {
+        // else, set accumulator equal to the result of calling the iterator on the accumulator and the current value
+        accumulator = iterator(accumulator, currentValue);
+      }
+      // return the accumulator to be used in the next iteration
+      return accumulator;
+    });
+
+    //finally return the accumulated value once the entire iteration is done
+    return accumulator;
   };
 
   // Determine if the array or object contains a given value (using `===`).
