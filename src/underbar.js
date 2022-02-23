@@ -164,8 +164,57 @@
     return result;
   };
 
+  /*
+  I - an array, OPTIONAL values of isSorted and an iterator function
+  O - a new array, without duplicates potentially with the iterator applied to each value
+  C -
+  E - if iterator or isSorted is undefined, ignore
+  */
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    // declare a result array as empty
+    const results = [];
+    // declare a transformation array
+    const transformationArray = array;
+    // declare a duplicate index array
+    const dupeIndex = [];
+    // check for an iterator
+    if (iterator) {
+      // if there is an iterator, apply the iterator to the transformation array
+      _.each(transformationArray, iterator);
+    }
+
+    // for loop through the transformation array
+    for (let i = 0; i < transformationArray.length; i++) {
+      if (i === transformationArray.length - 1) {
+        if (!dupeIndex.includes(i)) {
+          results.push(transformationArray[i]);
+        }
+        break;
+      }
+      // declare unique flag, initialize as true
+      let isUnique = true;
+      // check if the current index is included in the duplicate index array
+      if (dupeIndex.includes(i)) {
+        // if yes, skip
+        continue;
+      } else {
+        // if no, then loop through the array again starting at the next index
+        for (let j = i + 1; j < transformationArray.length; j++) {
+          // if the current value is === to the next loop value, then push j to dupeIndex arr and set flag false
+          if (transformationArray[i] === transformationArray[j]) {
+            isUnique = false;
+            dupeIndex.push(j);
+          }
+        }
+      }
+      if (isUnique) {
+        results.push(transformationArray[i]);
+      }
+    }
+
+    // return results array
+    return results;
   };
 
 
