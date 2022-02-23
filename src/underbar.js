@@ -60,7 +60,33 @@
   //
   // Note: _.each does not have a return value, but rather simply runs the
   // iterator function over each item in the input collection.
+  /*
+  I: collection of data, iterator function
+  O: no return, mutates data collection with iterator
+  C:
+  E: undefined iterator?
+  */
+
   _.each = function(collection, iterator) {
+    // check for iterator, assign default if not
+    if (!iterator) {
+      iterator = _.identity;
+    }
+    // check if collection is array
+    if (Array.isArray(collection)) {
+      // for loop through array
+      for (let i = 0; i < collection.length; i++) {
+        // call iterator on current value
+        iterator(collection[i], i, collection);
+      }
+    } else if (typeof collection === 'object' && collection !== null) {
+      // for in loop through obj
+      for (let key in collection) {
+        // call iterator on current property value
+        iterator(collection[key], key, collection);
+      }
+    }
+    // check if collection is object
   };
 
   // Returns the index at which value can be found in the array, or -1 if value
