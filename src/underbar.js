@@ -107,7 +107,32 @@
   };
 
   // Return all elements of an array that pass a truth test.
+  /*
+  I: array, truth test function
+  O: new array of passing elements
+  E: undefined truth test? (use identity)
+  */
   _.filter = function(collection, test) {
+    // declare and initialize result array
+    let result = [];
+    // check for defined test, if not use identity
+    if (!test) {
+      test = _.identity;
+    }
+    // check for collection is array
+    if (Array.isArray(collection)) {
+      // each loop over array
+      _.each(collection, function(value, index, collection) {
+        // check if current value passes test
+        if (test(value)) {
+          // if yes, push to result array
+          result.push(value);
+        }
+      });
+    }
+
+    // return result array
+    return result;
   };
 
   // Return all elements of an array that don't pass a truth test.
