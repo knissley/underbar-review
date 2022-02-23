@@ -130,15 +130,38 @@
         }
       });
     }
-
     // return result array
     return result;
   };
 
   // Return all elements of an array that don't pass a truth test.
+  /*
+  I: array, truth test function
+  O: new array of failing elements
+  E: undefined test
+  */
   _.reject = function(collection, test) {
     // TIP: see if you can re-use _.filter() here, without simply
     // copying code in and modifying it
+    // declare and initialize result array
+    let result = [];
+    // check for defined test, if not use identity
+    if (!test) {
+      test = _.identity;
+    }
+    // check for collection is array
+    if (Array.isArray(collection)) {
+      // each loop over array
+      _.each(collection, function(value, index, collection) {
+        // check if current value fails test
+        if (!test(value)) {
+          // if yes, push to result array
+          result.push(value);
+        }
+      });
+    }
+    // return result array
+    return result;
   };
 
   // Produce a duplicate-free version of the array.
