@@ -306,8 +306,28 @@
 
 
   // Determine whether all of the elements match a truth test.
+  /*
+  I: collection and truth test
+  O: boolean (true if ALL match truth test)
+  C:
+  E: empty collection? unidentified iterator
+  */
   _.every = function(collection, iterator) {
+    iterator = iterator || _.identity;
     // TIP: Try re-using reduce() here.
+    // declare truth flag
+    let truthFlag = true;
+    // run reduce with boolean accumulator on collection
+    _.reduce(collection, function(accumulator, item) {
+      accumulator = iterator(item);
+      // check if accumulator is false
+      if (!accumulator) {
+        // set truth flag to false
+        truthFlag = false;
+      }
+    }, true);
+    // return truth flag
+    return truthFlag;
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
