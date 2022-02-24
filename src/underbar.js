@@ -175,27 +175,27 @@
     // declare a result array as empty
     const results = [];
     // declare a transformation array
-    const transformationArray = array;
+    const transformationArray = array.slice();
     // declare a duplicate index array
     const dupeIndex = [];
     // check for an iterator
     if (iterator) {
       // if there is an iterator, apply the iterator to the transformation array
-      _.each(transformationArray, iterator);
+      _.each(transformationArray, function(value, currentIndex) {
+        transformationArray[currentIndex] = iterator(value);
+      });
     }
-
     // for loop through the transformation array
     for (let i = 0; i < transformationArray.length; i++) {
       if (i === transformationArray.length - 1) {
         if (!dupeIndex.includes(i)) {
-          results.push(transformationArray[i]);
+          results.push(array[i]);
         }
         break;
       }
-      // declare unique flag, initialize as true
-      let isUnique = true;
       // check if the current index is included in the duplicate index array
       if (dupeIndex.includes(i)) {
+
         // if yes, skip
         continue;
       } else {
@@ -203,14 +203,12 @@
         for (let j = i + 1; j < transformationArray.length; j++) {
           // if the current value is === to the next loop value, then push j to dupeIndex arr and set flag false
           if (transformationArray[i] === transformationArray[j]) {
-            isUnique = false;
             dupeIndex.push(j);
           }
         }
       }
-      if (isUnique) {
-        results.push(transformationArray[i]);
-      }
+      // push entry to result array
+      results.push(array[i]);
     }
 
     // return results array
