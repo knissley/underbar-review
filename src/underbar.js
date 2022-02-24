@@ -195,7 +195,6 @@
       }
       // check if the current index is included in the duplicate index array
       if (dupeIndex.includes(i)) {
-
         // if yes, skip
         continue;
       } else {
@@ -210,7 +209,6 @@
       // push entry to result array
       results.push(array[i]);
     }
-
     // return results array
     return results;
   };
